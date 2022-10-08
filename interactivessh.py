@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import sys, os, string, threading
+import time
 try:
     import paramiko
     #import paramiko package
@@ -40,7 +41,7 @@ def sudossh():
         if stderr.channel.recv_exit_status() != 0:
             print(f"Error: {stderr.readlines()}")
         else:
-            print(f"Output: \n{stdout.readlines()}")
+            print(f"Output: \n{stdout.read().decode()}")
         ssh.close()
     except Exception as err:
         print(str(err));
@@ -68,7 +69,7 @@ def grepverification():
         if stderr.channel.recv_exit_status() != 0:
             print(f"Error: {stderr.readlines()}")
         else:
-            print(f"Output: \n{stdout.readlines()}")
+            print(f"Output: \n{stdout.read().decode()}")
         ssh.close()
     except Exception as err:
         print(str(err));
@@ -83,6 +84,7 @@ def main():
     # starting thread 1
     th1.start()
     # starting thread 2
+    time.sleep(2)
     th2.start()
     # wait until thread 1 is completely executed
     th1.join()
